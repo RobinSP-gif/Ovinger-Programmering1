@@ -1,39 +1,30 @@
+import java.util.Scanner;
+
 public class Oppgave6_2 {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int aktivProgram = 1;
 
-        TekstAnalyse setning = new TekstAnalyse("Hei, jeg heter Robin, og går på dataingenørlinjen på NTNU Trondheim.");
-        char bokstav = 'E';
+        while (aktivProgram == 1) {
+            System.out.println("Skriv inn teksten du vil analysere:");
+            String tekst = sc.nextLine();
+            TekstAnalyse analyse = new TekstAnalyse(tekst);
 
-        System.out.println("Det er " + setning.finnForskjelligeBokstaver()+ " forskjellige bokstaver.");
-        System.out.println("Det er " + setning.finnAntallBokstaver() + " bokstaver.");
-        System.out.println("Det er " + setning.finnProsentIkkeBokstaver() + "% av tegnene som ikke er bokstaver.");
-        System.out.println("Det er " + setning.finnAntallForekomsterAv(bokstav) + " forekomster av bokstaven " + bokstav + ".");
-        System.out.println("Det er bokstaven '" + setning.finnBokstavenSomForekommerOftest() + "' som forekommer flest ganger.");
+            System.out.println("Det er " + analyse.finnForskjelligeBokstaver() + " forskjellige bokstaver.");
+            System.out.println("Det er " + analyse.finnAntallBokstaver() + " bokstaver.");
+            System.out.printf("Det er %.2f%% av tegnene som ikke er bokstaver.%n", analyse.finnProsentIkkeBokstaver());
+            System.out.println("Bokstaven(e) som forekommer flest ganger: " + analyse.finnBokstavenSomForekommerOftest());
+
+            System.out.println("\nVelg hvilken bokstav du ønsker å sjekke antall forekomster av:");
+            String input = sc.nextLine();
+            char bokstav = input.toLowerCase().charAt(0);
+            System.out.println("Det er " + analyse.finnAntallForekomsterAv(bokstav) + " forekomster av bokstaven '" + bokstav + "'.");
+
+            System.out.println("\nVil du gjøre en ny analyse? Trykk 1 for JA, 2 for NEI:");
+            aktivProgram = Integer.parseInt(sc.nextLine());
+        }
+
+        System.out.println("Takk for nå, programmet avsluttes.");
+        sc.close();
     }
 }
-
-
-
-/*
-Inndata: En setning.
-
-Utdata:
-    Finn antall forskjellige bokstaver i teksten. (kun bokstaver)
-    Finn totalt antall bokstaver i teksten.
-    Finn andel av teksten i prosent som ikke er bokstaver.
-    Finn antall forekomster av en gitt bokstav. (bokstaven er en parameter til metoden)
-    Finn bokstaven(e) som forekommer oftest i treksten.
-
-Teksten er et objekt av klassen String.
-Bruk charAt() for å få tegnet ved en bestemt posisjon.
-Lengden er gitt med metoden length()
-
-Som objektvariabel i klassen tekstanalyse skal du ha en tabell av int
-    Int antallTegnt = new int(30)
-
-
-Plan klasse tekstanalyse:
-    1. les inn ord fra bruker:
-
-
- */
