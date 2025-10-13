@@ -1,6 +1,6 @@
 public class Oppgave_7_1 {
     public static void main(String[] args) {
-        NyString tekst = new NyString("Hallo, dette er oppgave 7.1");
+        NyString tekst = new NyString("Hallo, dEtte er oppgave 7.1");
 
         System.out.println(tekst);
         System.out.println("\nHer er '" + tekst + "' forkortet til \n" + tekst.splittTekst());
@@ -32,20 +32,14 @@ class NyString {
     }
 
     public String fjernEnBokstav(String bokstav) {
-        String litenTekst = tekst.toLowerCase();
-        String litenBokstav = bokstav.toLowerCase();
-
         String resultat = "";
-        int start = 0;
-        int indeks = litenTekst.indexOf(litenBokstav, start);
+        char fjern = bokstav.toLowerCase().charAt(0);
 
-        while (indeks != -1) {
-            resultat += tekst.substring(start, indeks);
-            start = indeks + 1;
-            indeks = tekst.indexOf(litenBokstav, start);
+        for (int i = 0; i < tekst.length(); i++) {
+            if (Character.toLowerCase(tekst.charAt(i)) != fjern) {
+                resultat += tekst.charAt(i);
+            }
         }
-
-        resultat += tekst.substring(start);
         return resultat;
     }
 
