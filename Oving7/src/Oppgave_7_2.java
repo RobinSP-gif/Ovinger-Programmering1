@@ -8,11 +8,11 @@ public class Oppgave_7_2 {
             "Svaret er: \n" +
             "Det er litt vanskelig, men morsomt.\n");
 
+        System.out.println(tb.hentTekst());
         System.out.println("Det er " +tb.finnAntallOrd() + " antall ord i denne teksten.");
         System.out.println("Det er ca " + tb.finnGjennomsnitlingOrdlengde() + " bokstaver igjennomsnitt per ord.");
         System.out.println("Det er ca " + tb.finnGjennomsnitligAntallOrdPerPeriode() + " ord per setning.");
-        System.out.println(tb.byttUtEtOrd(" er ", " KULT "));
-        System.out.println(tb.hentTekst());
+        System.out.println("\nHer har vi byttet ut ordet 'er' med ordet 'KULT': \n" + tb.byttUtEtOrd(" er ", " KULT "));
         System.out.println(tb.hentTekstMedStoreBokstaver());
 
     }

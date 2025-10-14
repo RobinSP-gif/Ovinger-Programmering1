@@ -3,8 +3,8 @@ public class Oppgave_7_1 {
         NyString tekst = new NyString("Hallo, dEtte er oppgave 7.1");
 
         System.out.println(tekst);
-        System.out.println("\nHer er '" + tekst + "' forkortet til \n" + tekst.splittTekst());
-        System.out.println("\nHer er bokstaven 'e' fjernet fra '" + tekst + "' \n" + tekst.fjernEnBokstav("E"));
+        System.out.println("\nHer er '" + tekst + "' forkortet til: \n" + tekst.splittTekst());
+        System.out.println("\nHer er bokstaven 'e' fjernet fra: '" + tekst + "' \n" + tekst.fjernEnBokstav("E"));
 
     }
 }
