@@ -1,4 +1,8 @@
 package Oppgave1;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class ArbTaker {
       private final Person person;
       private final int arbeidstakerNr;
@@ -6,7 +10,7 @@ public class ArbTaker {
       private double manedsLonn;
       private double skatteTrekkProsent;
 
-      public ArbTaker(Person person, int arbeidstakerNr, int ansettelsesAar, double manedsLonn, double skatteTrekkProsent) { //Bør person her endres? slik at vi legger inn navn, og fødselsår her?
+      public ArbTaker(Person person, int arbeidstakerNr, int ansettelsesAar, double manedsLonn, double skatteTrekkProsent) {
             this.person = person;
             this.arbeidstakerNr = arbeidstakerNr;
             this.ansettelsesAar = ansettelsesAar;
@@ -51,12 +55,16 @@ public class ArbTaker {
 
 
       //Andre metoder
+      public int hentNaaVaerendeAar(){      //Henter året som er
+          GregorianCalendar kalender = new GregorianCalendar();
+          return kalender.get(Calendar.YEAR);
+      }
 
       public double skattPerMaaned(){
         return (this.manedsLonn * this.skatteTrekkProsent / 100);
       }
 
-      public double bruttoLonn(){
+      public double bruttoAarslonn(){
         return (manedsLonn * 12);
       }
 
@@ -67,24 +75,35 @@ public class ArbTaker {
       }
 
       public String ansattIAntallAar(){
-        int ansattIXAntallAar = 2025 - getAnsettelsesAar();
+        int ansattIXAntallAar = hentNaaVaerendeAar() - getAnsettelsesAar();
         if (ansattIXAntallAar == 0){
           return ("Denne arbeidstakeren ble ansatt i år.");
         }
         else{
-          return (Integer.toString(ansattIXAntallAar) + " år");
+          return (Integer.toString(ansattIXAntallAar));
         }
       }
 
       public String harArbeidtakerVaertAnsattXAntallAar(int aar){
-        if (aar > getAnsettelsesAar()) {
-          return ("Arbeidstakeren har ikke vært ansatt i " + aar + " år.");
+        if ((hentNaaVaerendeAar() - aar) > getAnsettelsesAar()) {
+          return ("Arbeidstakeren har vært ansatt i mer enn " + aar + " år.");
         }
-        else if (aar == getAnsettelsesAar()){
+        else if ((hentNaaVaerendeAar() - aar) == getAnsettelsesAar()){
           return ("Arbeidstakeren har akkurat vært ansatt i " + aar + " år.");
         }
         else {
-          return ("Arbeidstakeren har vært ansatt i mer enn " + aar + " år.");  //TEST!!!!
+          return ("Arbeidstakeren har ikke vært ansatt i " + aar + " år.");
         }
       }
+
+    @Override
+    public String toString() {
+        return "\nArbeidstaker nr: " + arbeidstakerNr + "\n" +
+                "Navn: " + person.toString() + "\n" +
+                "Ansatt siden: " + ansettelsesAar + " (" + ansattIAntallAar() + " år)" + "\n" +
+                "Månedslønn: " + manedsLonn + " kr\n" +
+                "Skattetrekk: " + skatteTrekkProsent + "%\n" +
+                "Bruttolønn pr år: " + bruttoAarslonn() + " kr\n" +
+                "Skatt pr år: " + skatteTrekkPrAar() + " kr";
+    }
 }
