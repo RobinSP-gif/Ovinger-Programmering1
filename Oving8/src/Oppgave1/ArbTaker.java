@@ -5,14 +5,14 @@ import java.util.GregorianCalendar;
 
 public class ArbTaker {
       private final Person person;
-      private final int arbeidstakerNr;
+      private final int ansattNr;
       private final int ansettelsesAar;
       private double manedsLonn;
       private double skatteTrekkProsent;
 
-      public ArbTaker(Person person, int arbeidstakerNr, int ansettelsesAar, double manedsLonn, double skatteTrekkProsent) {
+      public ArbTaker(Person person, int ansattNr, int ansettelsesAar, double manedsLonn, double skatteTrekkProsent) {
             this.person = person;
-            this.arbeidstakerNr = arbeidstakerNr;
+            this.ansattNr = ansattNr;
             this.ansettelsesAar = ansettelsesAar;
             this.manedsLonn = manedsLonn;
             this.skatteTrekkProsent = skatteTrekkProsent;
@@ -23,15 +23,15 @@ public class ArbTaker {
       public Person getPerson(){
         return person;
       }
-      public int getArbeidstakerNr(){
-        return arbeidstakerNr;
+      public int getAnsattNr(){
+        return ansattNr;
       }
       public int getAnsettelsesAar(){
         return ansettelsesAar;
       }
 
       public double getbruttoLonnPrAar(){
-        return manedsLonn;
+        return (manedsLonn * 12);
       }
 
       public double getSkatteTrekkProsent(){
@@ -39,7 +39,11 @@ public class ArbTaker {
       }
 
       public String getNavn(){
-        return (person.getEtternavn() + " " + person.getFornavn());
+          if (person.getMellomnavn().isEmpty()) {
+              return (person.getEtternavn() + ", " + person.getFornavn());
+          } else {
+              return (person.getEtternavn() + ", " + person.getFornavn() + " " + person.getMellomnavn());
+        }
       }
 
 
@@ -60,31 +64,35 @@ public class ArbTaker {
           return kalender.get(Calendar.YEAR);
       }
 
-      public double skattPerMaaned(){
+      public double skattPerMaaned(){   //Beregner skatt per måned
         return (this.manedsLonn * this.skatteTrekkProsent / 100);
       }
 
-      public double bruttoAarslonn(){
+      public double bruttoAarslonn(){   //Beregner brutto årslønn
         return (manedsLonn * 12);
       }
 
-      public double skatteTrekkPrAar(){
+      public int alder(){   //Beregner alder
+          return (hentNaaVaerendeAar() - person.getFodselsaar());
+      }
+
+      public double skatteTrekkPrAar(){ //Beregner skatt per år (minus juni og halv desember)
         double skattDesember = skattPerMaaned() / 2;
         double skattRestenAvAaret = skattPerMaaned() * 10;
         return (skattRestenAvAaret + skattDesember);
       }
 
-      public String ansattIAntallAar(){
+      public String ansattIAntallAar(){     //Beregner hvor lenge arbeidstaker har vært ansatt
         int ansattIXAntallAar = hentNaaVaerendeAar() - getAnsettelsesAar();
         if (ansattIXAntallAar == 0){
-          return ("Denne arbeidstakeren ble ansatt i år.");
+          return ("Denne arbeidstakeren ble ansatt i år");
         }
         else{
-          return (Integer.toString(ansattIXAntallAar));
+          return (Integer.toString(ansattIXAntallAar) + " år");
         }
       }
 
-      public String harArbeidtakerVaertAnsattXAntallAar(int aar){
+      public String harArbeidtakerVaertAnsattXAntallAar(int aar){   //Finner ut om arbeidstaker har vært ansatt mer, mindre eller akkurat ett gitt antall år
         if ((hentNaaVaerendeAar() - aar) > getAnsettelsesAar()) {
           return ("Arbeidstakeren har vært ansatt i mer enn " + aar + " år.");
         }
@@ -98,9 +106,10 @@ public class ArbTaker {
 
     @Override
     public String toString() {
-        return "\nArbeidstaker nr: " + arbeidstakerNr + "\n" +
+        return "\nAnsatt nr: " + ansattNr + "\n" +
                 "Navn: " + person.toString() + "\n" +
-                "Ansatt siden: " + ansettelsesAar + " (" + ansattIAntallAar() + " år)" + "\n" +
+                "Alder: " + alder() + " år\n" +
+                "Ansatt siden: " + ansettelsesAar + " (" + ansattIAntallAar() + ")" + "\n" +
                 "Månedslønn: " + manedsLonn + " kr\n" +
                 "Skattetrekk: " + skatteTrekkProsent + "%\n" +
                 "Bruttolønn pr år: " + bruttoAarslonn() + " kr\n" +

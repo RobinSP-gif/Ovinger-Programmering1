@@ -43,5 +43,4 @@ public class Person {
             return fornavn + " " + mellomnavn + " " + etternavn;
         }
     }
-
 }
