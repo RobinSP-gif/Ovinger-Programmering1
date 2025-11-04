@@ -2,7 +2,7 @@ package no.ntnu.Models;
 
 import java.util.ArrayList;
 
-// Samling av menyer
+// Collection of menus
 public class MenuRegistry {
   private final ArrayList<Dish> dishes;
   private final ArrayList<Menu> menus;
@@ -12,10 +12,14 @@ public class MenuRegistry {
     menus = new ArrayList<>();
   }
 
+  public ArrayList<Dish> getAllDishes(){
+    return new ArrayList<>(dishes);
+  }
+
   // Register Dish
   public void registerDish(Dish dish){
     if (dish == null) {
-      throw new IllegalArgumentException("Rett maa ha ett navn");
+      throw new IllegalArgumentException("Dish kan ikke være null.");
     }
 
     for (Dish d : dishes) {
@@ -26,17 +30,19 @@ public class MenuRegistry {
     dishes.add(dish);
   }
 
-  public String findDish(String name) {
+  // Find a dish, with name
+  public Dish findDish(String name) {
     if (name == null)
       return null;
 
     for (Dish d : dishes) {
       if(d.getName().equalsIgnoreCase(name))
-        return d.getName();
+        return d;
     }
     return null;
   }
 
+  // Find all dishes by type
   public ArrayList<Dish> getAllDishesByType(String type) {
     ArrayList<Dish> result = new ArrayList<>();
     if (type == null) {
@@ -51,6 +57,7 @@ public class MenuRegistry {
     return result;
   }
 
+  // Register a new menu
   public void registerMenu(Menu menu) {
     if (menu == null) {
       throw new IllegalArgumentException("Meny maa ha ett navn.");
@@ -63,7 +70,7 @@ public class MenuRegistry {
     }
     menus.add(menu);
     }
-
+    // Find all menus with total price within two numbers
     public ArrayList<Menu> findAllMenusWithTotalPriceWithin(double priceLow, double priceHigh){
     ArrayList<Menu> result = new ArrayList<>();
     if (priceLow < 0 || priceHigh < 0) {

@@ -1,6 +1,6 @@
 package no.ntnu.Models;
 
-// Representerer en rett
+// Representing a dish
 public class Dish {
   private final String name;
   private final String dishType;

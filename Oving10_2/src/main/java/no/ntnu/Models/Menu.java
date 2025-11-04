@@ -2,12 +2,12 @@ package no.ntnu.Models;
 
 import java.util.ArrayList;
 
-// Samler retter
+// Collection of dishes
 public class Menu {
   private final String name;
   private ArrayList<Dish> dishes;
 
-  // Konstruktør
+  // Constructor
   public Menu(String name) {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Menu name cannot be empty.");
@@ -21,8 +21,10 @@ public class Menu {
     return name;
   }
 
-  // Metoder
+  // Methods
   public void add(Dish d){
+    if (d == null) throw new IllegalArgumentException("Dish kan ikke være null.");
+    if (!dishes.contains(d)) dishes.add(d);
     dishes.add(d);
   }
 
@@ -31,7 +33,7 @@ public class Menu {
   }
 
   public ArrayList<Dish> getAllDishes() {
-    return dishes;
+    return new ArrayList<>(dishes);
   }
 
   public double getTotalPrice() {
@@ -47,5 +49,19 @@ public class Menu {
     for (Dish d : dishes) {
       System.out.println(d);
     }
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("\nMeny: ").append(name).append("\n");
+    sb.append("Retter:\n");
+    for (Dish d : dishes) {
+      sb.append(" - ").append(d.getName())
+        .append(" (").append(d.getDishType())
+        .append(") ").append(d.getPrice()).append(" kr\n");
+    }
+    sb.append("Totalpris: ").append(getTotalPrice()).append(" kr\n");
+    return sb.toString();
   }
 }
