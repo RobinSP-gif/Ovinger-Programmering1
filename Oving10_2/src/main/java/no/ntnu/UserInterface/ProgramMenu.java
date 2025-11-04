@@ -14,17 +14,16 @@ public class ProgramMenu {
   }
 
   public void run(){
-
     boolean runProgram = true;
 
     while (runProgram) {
-      int choise;
+      int choice;
 
       userMenu();
-      choise = sc.nextInt();
+      choice = sc.nextInt();
       sc.nextLine();
 
-      switch (choise){
+      switch (choice){
         case 1:
           System.out.println("Gi retten ett navn: ");
           String name = sc.nextLine();
